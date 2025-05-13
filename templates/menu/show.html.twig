@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu{% endblock %}
+{% dump(ingrediants) %}
+{% block body %}
+    <h1>Menu</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ menu.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ menu.titre }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>
+                    {% if menu.photo %}
+                        <img src="{{ asset('uploads/photos/' ~ menu.photo) }}" alt="Photo du menu {{ menu.titre }}" style="max-width: 300px;">
+                    {% else %}
+                        <p>Aucune photo disponible</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Ingrédiants</th>
+                <td>
+                    <ul>
+
+                        {% for ingrediant in ingrediants %}
+                            <li>{{ ingrediant.titre }}</li>
+                        {% else %}
+                            <li>Aucun ingrédient trouvé</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_menu_index') }}">back to list</a>
+
+    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}">edit</a>
+
+    {{ include('menu/_delete_form.html.twig') }}
+{% endblock %}
