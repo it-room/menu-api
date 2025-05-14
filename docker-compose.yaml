@@ -1,6 +1,6 @@
 services:
     php:
-        image: shinsenter/symfony:php8.4
+        image: shinsenter/symfony:php8.3
         container_name: symfony_app
         ports:
             - "80"
