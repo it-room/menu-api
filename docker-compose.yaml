@@ -1,11 +1,15 @@
 services:
     php:
-        image: shinsenter/symfony:php8.4
+        build:
+            context: .
+            dockerfile: Dockerfile
         container_name: symfony_app
         ports:
-            - "80:80"
+            - "80"
         volumes:
             - ./:/var/www/html
+            - ./public:/var/www/html/public
+            - jwt_data:/var/www/html/config/jwt
         depends_on:
             - database
     database:
