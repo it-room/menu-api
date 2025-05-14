@@ -9,7 +9,10 @@ services:
         volumes:
             - ./:/var/www/html
             - ./public:/var/www/html/public
-            - jwt_data:/var/www/html/config/jwt
+            - type: bind
+              source: /home/data_user/menu-api/jwt
+              target: /var/www/html/config/jwt
+              is_directory: true
         depends_on:
             - database
     database:
