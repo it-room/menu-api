@@ -3,7 +3,7 @@ services:
         image: shinsenter/symfony:php8.4
         container_name: symfony_app
         ports:
-            - "80:80"
+            - "80"
         volumes:
             - ./:/var/www/html
         depends_on:
