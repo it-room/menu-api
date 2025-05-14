@@ -16,6 +16,27 @@ class MenuRepository extends ServiceEntityRepository
         parent::__construct($registry, Menu::class);
     }
 
+    public function findAll(): array
+    {
+        return $this->findBy([], ['id' => 'ASC']);
+    }
+
+    public function findByCategory(string $category): array
+    {
+        return $this->findBy(['category' => $category], ['id' => 'ASC']);
+    }
+    
+    public function findMenuByUser(int $userId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.userlink = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Menu[] Returns an array of Menu objects
     //     */

@@ -2,34 +2,43 @@
 
 {% block title %}Menu index{% endblock %}
 
+
 {% block body %}
-    <h1>Menu index</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Menu index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for menu in menus %}
-            <tr>
-                <td>{{ menu.id }}</td>
-                <td>{{ menu.titre }}</td>
-                <td>
-                    <a href="{{ path('app_menu_show', {'id': menu.id}) }}">show</a>
-                    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {% if menu.photo %}
+                    <a href="{{ path('app_menu_show', {'id': menu.id}) }}">
+                        <img src="{{ asset('uploads/photos/' ~ menu.photo) }}" 
+                             alt="Photo du menu {{ menu.titre }}" 
+                             class="w-100"
+                             style="height: 200px; object-fit: cover;">
+                             </a>
+                    {% endif %}
 
-    <a href="{{ path('app_menu_new') }}">Create new</a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ menu.titre }}</h5>
+                    </div>
+
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ path('app_menu_show', {'id': menu.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                        <a href="{{ path('app_menu_edit', {'id': menu.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col">
+                <p class="text-muted">Aucun menu trouvé.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('app_menu_new') }}" class="btn btn-success">➕ Créer un nouveau menu</a>
+    </div>
+</div>
 {% endblock %}

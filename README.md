@@ -1,3 +1,75 @@
+# Application de gestion de menu
+
+## APIs
+
+### Login : /api/login 
+
+<pre>
+{
+    "username": "alepoutre@itroom.fr",
+    "password": "coucou"
+}
+</pre>
+
+En retour, on a un token jwt
+
+### Liste de mes menus : api/menu/my
+
+On passe le token et en retour on a un json 
+<pre    >
+    {
+        "id": 1,
+        "titre": "nouveau Menu",
+        "ingrediants": [
+            {
+                "id": 1,
+                "titre": "yaourt"
+            },
+            {
+                "id": 2,
+                "titre": "bananes"
+            },
+            {
+                "id": 3,
+                "titre": "jus d'orange"
+            }
+        ],
+        "photo": "Capture-d-ecran-2025-04-28-a-09-41-07-681b6ba6c6ef9.png"
+    },
+    {
+        "id": 3,
+        "titre": "palmier",
+        "ingrediants": [],
+        "photo": "100-0488-68243b5f9241f.jpg"
+    }
+
+</pre>
+
+### ajoute d'un ou plusieurs ingrédents 
+api/menu/{menuId}/ingredients/titles   
+
+<pre>
+{
+   "titles": ["yaourt", "bananes", "jus d'orange"]
+}
+</pre>
+
+
+
+
+  api_mes_menu                      GET        ANY      ANY    /api/mesMenu                                   
+  api_menu_add_ingredients          POST       ANY      ANY    /api/menu/{menuId}/ingredients                 
+  api_menu_add_ingredients_titles   POST       ANY      ANY    /api/menu/{menuId}/ingredients/titles          
+  api_menu_update_ingredients       PUT        ANY      ANY    /api/menu/{menuId}/ingredients                 
+  api_menu_remove_ingredient        DELETE     ANY      ANY    /api/menu/{menuId}/ingredients/{ingredientId}  
+  api_menu_add                      POST       ANY      ANY    /api/menu/add                                  
+  api_menu_update                   PUT        ANY      ANY    /api/menu/update/{id}                          
+  api_menu_delete                   DELETE     ANY      ANY    /api/menu/delete/{id}                
+
+
+
+
+
 # Symfony Docker
 
 A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,

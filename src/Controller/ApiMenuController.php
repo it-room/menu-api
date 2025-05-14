@@ -17,6 +17,24 @@ use App\Entity\Ingrediant;
 #[Route('/api/menu')]
 class ApiMenuController extends AbstractController
 {
+    #[Route('/my', name: 'api_mes_menu', methods: ['GET'])]
+    public function myMenu(
+        MenuRepository $menuRepository,
+        NormalizerInterface $normalizer
+    ): JsonResponse {
+        $user = $this->getUser();
+        if (!$user instanceof UserInterface) {
+            return $this->json(['message' => 'Unauthorized'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $menus = $menuRepository->findMenuByUser($user->getId());
+
+        return $this->json(
+            $normalizer->normalize($menus, null, ['groups' => 'menu:read']),
+            JsonResponse::HTTP_OK
+        );
+    }
+    
     #[Route('/{menuId}/ingredients', name: 'api_menu_add_ingredients', methods: ['POST'])]
     public function addIngredients(
         int $menuId,

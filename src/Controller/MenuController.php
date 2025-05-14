@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Entity\User;
 use App\Form\MenuType;
 use App\Repository\IngrediantRepository;
 use App\Repository\MenuRepository;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/menu')]
+#[Route('/')]
 final class MenuController extends AbstractController
 {
     #[Route(name: 'app_menu_index', methods: ['GET'])]
@@ -25,7 +26,21 @@ final class MenuController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_menu_new', methods: ['GET', 'POST'])]
+    #[Route('menu/my', name: 'app_menu_my', methods: ['GET'])]
+    public function myMenu(MenuRepository $menuRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('menu/index.html.twig', [
+            'menus' => $menuRepository->findMenuByUser($user->getId()),
+        ]);
+    }
+
+    #[Route('menu/new', name: 'app_menu_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $menu = new Menu();
@@ -45,7 +60,7 @@ final class MenuController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_menu_show', methods: ['GET'])]
+    #[Route('menu/{id}', name: 'app_menu_show', methods: ['GET'])]
     public function show(
         Menu $menu,
         IngrediantRepository $ingrediantRepository,
@@ -61,7 +76,7 @@ final class MenuController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_menu_edit', methods: ['GET', 'POST'])]
+    #[Route('menu/{id}/edit', name: 'app_menu_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Menu $menu,
                          SluggerInterface $slugger,
@@ -103,7 +118,7 @@ final class MenuController extends AbstractController
         }
 
 
-    #[Route('/{id}', name: 'app_menu_delete', methods: ['POST'])]
+    #[Route('menu/{id}', name: 'app_menu_delete', methods: ['POST'])]
     public function delete(Request $request, Menu $menu, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$menu->getId(), $request->getPayload()->getString('_token'))) {
