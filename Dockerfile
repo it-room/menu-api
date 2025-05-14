@@ -1,4 +1,4 @@
-FROM shinsenter/php:8.3-frankenphp
+FROM shinsenter/php:8.3-fpm-nginx
 
 # Install imagick, swoole and xdebug
 RUN phpaddmod http
