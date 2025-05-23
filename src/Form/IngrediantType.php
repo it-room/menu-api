@@ -19,7 +19,7 @@ class IngrediantType extends AbstractType
             ->add('titre')
             ->add('menu', EntityType::class, [
                 'class' => Menu::class,
-                'choice_label' => 'id',
+                'choice_label' => 'titre',
             ])
         ;
     }

@@ -36,6 +36,18 @@ class MenuRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    
+    public function findMenuByIngrediant(string $titre): array
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.ingrediants', 'i')
+            ->andWhere('LOWER(i.titre) LIKE LOWER(:titre)')
+            ->setParameter('titre', '%'.$titre.'%')
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     //    /**
     //     * @return Menu[] Returns an array of Menu objects

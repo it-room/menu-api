@@ -27,6 +27,7 @@
             {% endif %}
 
             <div class="mt-4 d-flex justify-content-between">
+                <a href="{{ path('app_ingrediant_menu_add', {'id': menu.id}) }}" class="btn btn-success">➕ Ajouter un ingrédient</a>
                 <a href="{{ path('app_menu_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
                 <a href="{{ path('app_menu_edit', {'id': menu.id}) }}" class="btn btn-primary">✏️ Modifier</a>
             </div>

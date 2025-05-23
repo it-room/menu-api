@@ -41,6 +41,32 @@ final class IngrediantController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/menu/{id}', name: 'app_ingrediant_menu_add', methods: ['GET', 'POST'])]
+    public function addToMenu(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $ingrediant = new Ingrediant();
+        $form = $this->createForm(IngrediantType::class, $ingrediant);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $menu = $entityManager->getRepository('App\Entity\Menu')->find($id);
+            
+            if (!$menu) {
+                throw $this->createNotFoundException('Menu non trouvé');
+            }
+
+            $ingrediant->setMenu($menu);
+            $entityManager->persist($ingrediant);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_menu_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('ingrediant/new.html.twig', [
+            'ingrediant' => $ingrediant,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_ingrediant_show', methods: ['GET'])]
     public function show(Ingrediant $ingrediant): Response
