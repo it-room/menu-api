@@ -40,6 +40,7 @@ security:
         #- { path: ^/user, roles: ROLE_ADMIN}
         - { path: ^/menu, roles: ROLE_USER}
         - { path: ^/admin, roles: ROLE_ADMIN}
+        - { path: ^/user, roles: ROLE_ADMIN}
         - { path: ^/$, roles: PUBLIC_ACCESS }
         # - { path: ^/profile, roles: ROLE_USER }
 
