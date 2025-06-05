@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
             //dd($user->getPassword());
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_user_index');
+            return $this->redirectToRoute('app_home');
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
